@@ -1,28 +1,31 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="view-body">
+    <ItemsView />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import ItemsView from "@/views/ItemsView.vue";
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld,
-  },
+    ItemsView
+  }
 };
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+html {
+  font-size: 62.5%;
+}
+
+.view-body {
+  margin: 2.4rem 14rem;
+}
+
+@media (max-width: 1200px) {
+  .view-body {
+    margin: 1.6rem 1.8rem;
+  }
 }
 </style>
