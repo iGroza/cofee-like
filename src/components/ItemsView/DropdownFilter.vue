@@ -1,10 +1,22 @@
 <template>
   <div class="dropdown">
-      <div class="dropdown__title">{{this.title}}</div>
-      <div class="dropdown__input"></div>
-      <div class="dropdown__options">
-          <div class="dropdown__option-item" v-for="option in options" :id='option.title'>{{option.title}}</div>
+    <div class="dropdown__title">{{this.title}}</div>
+    <div class="dropdown__input input" @click="onInputClick">
+      <div class="input__title">{{this.selectedOption.title}}</div>
+      <div class="input__arrow"></div>
+    </div>
+    <div class="dropdown__options">
+      <div class="options" :class="{'options_active': isShowOptions}">
+        <div
+          v-if="isShowOptions"
+          class="options__item"
+          v-for="option in options"
+          :id="option.id"
+          :class="{'options__item_selected': option.id === selectedOption.id}"
+          @click="onItemClick(option)"
+        >{{option.title}}</div>
       </div>
+    </div>
   </div>
 </template>
 
@@ -14,13 +26,97 @@ export default {
     title: String,
     id: String,
     options: Array
+  },
+
+  data() {
+    return {
+      selectedOption: this.options[0],
+      isShowOptions: false
+    };
+  },
+
+  methods: {
+    onItemClick(data) {
+      this.isShowOptions = false;
+      this.selectedOption = data;
+      this.$emit("change", { value: data.id, id: this.id });
+    },
+
+    onInputClick() {
+      this.isShowOptions = !this.isShowOptions;
+    }
   }
 };
 </script>
 
-<style>
-.arrow {
-  background: url("data:image/svg+xml;charset=utf-8,%3Csvg width=%2212%22 height=%227%22 viewBox=%220 0 12 7%22 fill=%22none%22 xmlns=%22http://www.w3.org/2000/svg%22 preserveAspectRatio=%22none%22%3E%3Cpath d=%22M1 1l5 5 5-5%22 stroke=%22%2300a75d%22/%3E%3C/svg%3E")
-    no-repeat;
+<style lang='scss'>
+.dropdown {
+  &__title {
+    font-family: Avenir;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    color: #101010;
+    opacity: 0.5;
+  }
+
+  &__input {
+    display: flex;
+    padding-bottom: 1rem;
+    border-bottom: solid 0.1rem #b3e5ce;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__options {
+    position: relative;
+  }
+
+  .options {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    z-index: 1;
+    background: white;
+    width: 100%;
+    opacity: 0;
+
+    &_active {
+      opacity: 1;
+    }
+
+    &__item {
+      z-index: 2;
+      font-family: Avenir;
+      font-size: 1.6rem;
+      line-height: 1.5rem;
+      color: #101010;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+
+      &:hover {
+        color: #00a75d;
+      }
+
+      &_selected {
+        color: #80d3ae;
+      }
+    }
+  }
+
+  .input {
+    &__title {
+      font-family: Avenir;
+      font-size: 1.6rem;
+      line-height: 2.2rem;
+      color: #101010;
+    }
+
+    &__arrow {
+      width: 1rem;
+      height: 0.5rem;
+      background: url("../../assets/img/arrow_down.svg") no-repeat;
+    }
+  }
 }
 </style>

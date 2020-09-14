@@ -1,6 +1,9 @@
 <template>
   <div class="filter__item">
     <div class="filter__bars">
+      <div class="bar">
+        <span class="bar__item bar__item_active" v-for="i in max"></span>
+      </div>
       <input
         type="range"
         class="filter__input"
@@ -9,9 +12,6 @@
         v-model:value="value"
         @change="onChange"
       />
-      <div class="bar">
-        <span class="bar__item bar__item_active" v-for="i in max"></span>
-      </div>
     </div>
     <div class="filter__title">{{this.title}}</div>
   </div>
@@ -83,7 +83,6 @@ export default {
     opacity: 0;
     -webkit-appearance: none;
     height: 2rem;
-    z-index: 2;
     cursor: pointer;
   }
 }
